@@ -1,7 +1,7 @@
 #joinModal.modal.fade.modal-lg(tabindex='-1', aria-hidden='true')
   .modal-dialog
     .modal-content
-      form(name='joinForm' method='post' action='/users/join')
+      form(name='joinForm' method='post' action='/users/join' onsubmit="return joinSubmit(this);")
         .modal-header
           h5#exampleModalLabel.modal-title 회원가입
           button.close(type='button', data-dismiss='modal', aria-label='Close')

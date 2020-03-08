@@ -7,8 +7,9 @@ CREATE TABLE `user` (
 	`api_id` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
 	`created` DATETIME NOT NULL,
 	`updated` DATETIME NOT NULL,
-	`deleted` DATETIME NOT NULL,
-	PRIMARY KEY (`id`)
+	`deleted` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `email` (`email`)
 )
 COLLATE='utf8mb4_unicode_ci'
 ENGINE=InnoDB
