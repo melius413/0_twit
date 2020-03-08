@@ -24,7 +24,7 @@ CREATE TABLE `post` (
 	`deleted` DATETIME NOT NULL,
 	`user_id` INT(11) NOT NULL,
 	PRIMARY KEY (`id`),
-	INDEX `FK_post_user` (`user_id`),
+	INDEX `FK_post_user` (`user_id`), -- KEY???
 	CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 )
 COLLATE='utf8mb4_unicode_ci'
@@ -49,7 +49,7 @@ CREATE TABLE `post_tag` (
 	`created` DATETIME NOT NULL,
 	`updated` DATETIME NOT NULL,
 	PRIMARY KEY (`post_id`, `tag_id`),
-	INDEX `FK_post_tag_tag` (`tag_id`),
+	INDEX `FK_post_tag_tag` (`tag_id`), -- KEY??
 	CONSTRAINT `FK_post_tag_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
 	CONSTRAINT `FK_post_tag_tag` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`)
 )

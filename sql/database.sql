@@ -98,7 +98,17 @@ CREATE TABLE IF NOT EXISTS `user` (
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
+
 /*
+draw.io
+- erd툴에 좋음, workbench에도 있음
+
 - post-tag, follow 테이블은 N:N 관계설정을 위한 중간 테이블
 - 자동 증가 필드는 primary key가 되어야함?
+
+테이블간 관계설정을 위해서 foreign 키 설정, foreign키는 primary키 이여야함?
+cascade: 관련된 모든 데이터도 삭제됨
+no action: 상대데이터에 변화가 생겨도 아무변화 없음
+
+개인 프로젝트: 부동산 전문 트윗
 */
