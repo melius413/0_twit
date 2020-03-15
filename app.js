@@ -5,9 +5,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+require('dotenv').config(); // 패스포트보다 먼저, 위치가 중요함, 다른위치에서 passport가 안될 수 있음
 const passport = require('passport');
 const passportInit = require('./passport'); // index.js
-require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');

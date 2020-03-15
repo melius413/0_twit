@@ -3,11 +3,11 @@ const bcrypt = require('bcrypt');
 const { connect } = require('../modules/mysql');
 const { alertLoc } = require('../modules/util');
 const passport = require('passport');
-const { isLogin, isLogout, isLog } = require('../modules/auth-chk');
+const { isLogin, isLogout } = require('../modules/auth-chk');
 
 const router = express.Router();
 
-router.post('/join', isLog, async function (req, res, next) {
+router.post('/join', isLogout, async function (req, res, next) {
   let { username, email, userpw } = req.body;
   let sql, sqlVals, result, pugVals;
   sql = "SELECT email FROM user WHERE email=?";
@@ -24,7 +24,7 @@ router.post('/join', isLog, async function (req, res, next) {
   }
 });
 
-router.post('/login', isLog, async (req, res, next) => {
+router.post('/login', isLogout, async (req, res, next) => {
   /*
   // passport로 대체
   let { email, userpw } = req.body;
@@ -59,13 +59,17 @@ router.post('/login', isLog, async (req, res, next) => {
   // http://www.passportjs.org/docs/authenticate/ >> Custom Callback
   // (() => { })(req, res, next); // 즉시실행함수 (미들웨어 등록)
   passport.authenticate('local', done)(req, res, next); // 즉시실행함수 (미들웨어 등록)
+  console.log(req.user); // 세션에 들어가 있는 유저정보
 });
 
-router.get('/logout', isLog, () => { // url과 콜백사이에 미들웨어 계속 넣을수있음
-
+router.get('/logout', isLogin, (req, res, next) => { // url과 콜백사이에 미들웨어 계속 넣을수있음
+  req.logout(); // 패스포트 메소드
+  req.app.locals.user = null; // 전역변수(locals) 사용시 초기화
+  // res.redirect('/');
+  res.redirect(alertLoc('로그아웃 되었습니다.', '/'));
 });
 
-router.post('/idchk', async (req, res, next) => {
+router.post('/idchk', isLogout, async (req, res, next) => {
   let { email } = req.body;
   let sql, result;
   sql = "SELECT email FROM user WHERE email=?";
