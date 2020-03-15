@@ -2,8 +2,10 @@ var express = require('express');
 const bcrypt = require('bcrypt');
 const { connect } = require('../modules/mysql');
 const { alertLoc } = require('../modules/util');
+const passport = require('passport');
 const { isLogin, isLogout, isLog } = require('../modules/auth-chk');
-var router = express.Router();
+
+const router = express.Router();
 
 router.post('/join', isLog, async function (req, res, next) {
   let { username, email, userpw } = req.body;
@@ -42,6 +44,15 @@ router.post('/login', isLog, async (req, res, next) => {
 
 router.get('/logout', isLog, () => { // url과 콜백사이에 미들웨어 계속 넣을수있음
 
+});
+
+router.post('/idchk', async (req, res, next) => {
+  let { email } = req.body;
+  let sql, result;
+  sql = "SELECT email FROM user WHERE email=?";
+  result = await connect.execute(sql, [email]);
+  if (result[0][0]) res.json({ result: false });
+  else res.json({ result: true });
 });
 
 module.exports = router;
