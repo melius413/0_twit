@@ -47,6 +47,7 @@ router.post('/login', isLogout, async (req, res, next) => {
   // 여기서 미들웨어 실행가능
   // passport(index.js, local.js)의 done함수 작성
   const done = (err, user, msg) => {
+    console.log(req.user); // 카카오 로그인된 사용자정보
     if (err) return next(err);
     if (!user) return res.send(alertLoc(msg, '/'));
     else {
@@ -65,7 +66,17 @@ router.post('/login', isLogout, async (req, res, next) => {
 router.get('/logout', isLogin, (req, res, next) => { // url과 콜백사이에 미들웨어 계속 넣을수있음
   req.logout(); // 패스포트 메소드
   console.log(req.user); // 로그인 정보확인
-  req.session.destroy(); // 세션삭제 (세션을 지워야지 로그아웃됨??)
+  // req.session.destroy(); // 세션삭제 (세션을 지워야지 로그아웃됨??)
+
+  // 카카오 로그아웃 문제
+  // res.clearCookie(); // 카카오 로그아웃을 위해 쿠키까지 삭제필요?? 안됨
+  // Kakao.Auth.logout(); // 로그아웃을 위해서 카카오 API 직접호출 필요 또는
+  // https://developers.kakao.com/docs/restapi/user-management#%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83
+  // curl -v -X POST https://kapi.kakao.com/v1/user/logout \
+  // -H "Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  // -H 는 헤더에 담에서 보내라
+  // beforeSend 사용필요 >> 해당부분 프론트에서 처리
+
   req.app.locals.user = null; // 전역변수(locals) 사용시 초기화
   // res.redirect('/');
   res.redirect(alertLoc('로그아웃 되었습니다.', '/'));

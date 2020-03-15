@@ -11,7 +11,7 @@ module.exports = (passport) => {
     });
 
     // 쿠키에서 받은 id를 이용해서 db에서 유저데이터를 가지고 옮
-    // 유저정보를 req.user에 넣음
+    // 유저정보를 req.user에 넣음, 이후부터 req.user 사용가능
     passport.deserializeUser(async (id, done) => {
         let sql, result, user;
         sql = "SELECT * FROM user WHERE id=" + id;
