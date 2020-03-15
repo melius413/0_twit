@@ -19,12 +19,28 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.locals.pretty = true;
 
+// session 관리
+app.use(cookieParser(process.env.cookieSalt)); // 쿠키파서에 secret(salt)을 넣을수 있다. 암호화
+app.use(session({
+  resave: false, // 있다면 다시 저장안함
+  saveUninitialized: false,
+  secret: process.env.cookieSalt,
+  cookie: {
+    httpOnly: true,
+    secure: false
+  }
+}));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.cookieSalt)); // 쿠키파서에 secret(salt)을 넣을수 있다.
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// passport 설정
+passportInit(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

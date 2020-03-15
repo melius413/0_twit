@@ -25,6 +25,8 @@ router.post('/join', isLog, async function (req, res, next) {
 });
 
 router.post('/login', isLog, async (req, res, next) => {
+  /*
+  // passport로 대체
   let { email, userpw } = req.body;
   let sql, sqlVals, result;
   // userpw = await bcrypt.hash(userpw, 11); // method 1
@@ -40,6 +42,23 @@ router.post('/login', isLog, async (req, res, next) => {
   } else {
     res.send(alertLoc('이메일/패스워드가 일치하지 않습니다.', '/'));
   }
+  */
+
+  // 여기서 미들웨어 실행가능
+  // passport(index.js, local.js)의 done함수 작성
+  const done = (err, user, msg) => {
+    if (err) return next(err);
+    if (!user) return res.send(alertLoc(msg, '/'));
+    else {
+      req.login(user, () => { // passport의 함수
+        if (err) return next(err);
+        else return res.send(alertLoc('로그인 되었습니다.', '/'));
+      });
+    }
+  };
+  // http://www.passportjs.org/docs/authenticate/ >> Custom Callback
+  // (() => { })(req, res, next); // 즉시실행함수 (미들웨어 등록)
+  passport.authenticate('local', done)(req, res, next); // 즉시실행함수 (미들웨어 등록)
 });
 
 router.get('/logout', isLog, () => { // url과 콜백사이에 미들웨어 계속 넣을수있음
