@@ -15,3 +15,99 @@ Custom Callback
 - passport-local
 
 multer-s3...
+
+
+######### 마지막 수업
+TabNine .. 머신러닝 자동완성... 별로인듯
+
+요즘은 회원가입
+- 아이디 ... 중복정보 바로 알려줌
+
+passport 가입검증
+passport-local 로컬에 저장
+passport-kakao
+
+각 폴더의 index.js가 다른파일 관리함.
+
+패스포트는 서버(레디스같은 디비)필요없이 사용함
+
+장바구니 정보는 쿠키
+민감한 정보는 세션
+그러나 사용자가 많을때는 세션부하(메모리)가 많이 걸림
+
+세션에는 아이디만 넣고,(부하감소)
+나머지정보는 DB에서 실시간으로 로딩하여 사용
+
+패스포트
+쿠키에는 아이디만 넣어두고,
+
+힘들때 여유있는 사람...
+
+developers.kakao.com 소셜로긴
+
+안양 파이어베이스 ... 마스크 정보받기
+클러스트링. 공공db에서 받음 미터수
+
+수집목적은 로긴화면에서 보여줌
+사이트 로그인 및 데이터베이스 저장
+
+카카오계정
+카카오 로그인 및
+리다이렉트: 로그인정보 보내주는 곳
+http://127.0.0.1:3000/users/kakao/cb
+http://melius413.gabia.io/users/kakao/cb
+
+이메일을 필수항목으로 받을수 없다. (비즈앱등록필요)
+
+https://devtalk.kakao.com/t/node-js-passport/48774
+패스포트 카카오 로그아웃
+Kakao.Auth.logout() 필요
+>> 패스포트로 카카오 로그아웃 힘든듯
+
+결과사이트
+booldook3.gabia.io >> 관련소스
+https://github.com/booldook/2019-kn-node-sns
+
+가비아
+호스팅>웹호스팅>무료시작
+관리콘솔 > 버전설정 V12(Erbi), MySQL 5.7
+
+승인대기
+
+보안 > 호스팅 >  SFTP/SSH 접속 설정 > SSH 허용 1개월
+웹 서버> 비밀번호 > 웹/DB 통합 > 비밀번호 등록
+
+ssh 접근 >>
+SSH는 bash에만 돈다.
+bash 쉘열고
+$ ssh melius413@melius413.gabia.io
+yes, password 입력
+
+스크립트 추가 (deploy)
+포트변경(8080)
+
+https://wiki.gabia.io/
+
+파일올리기 ftp FileZila로 업로드
+포트번호는 22로 접근해야함
+.git과 노드모듈 빼고 다 올려야함.
+ssh 콘솔에서 npm i 하면 깔린다.
+
+DB연결해야함.
+워크벤치 원격접속 url은 db.melius413.gabia.io로 접속 포트는 3306
+아이디랑 비밀번호
+
+로컬 백업sql 받아서 원격에서 실행
+
+DATABASE 생성부분은 지운다.
+테이블 생성부분만 실행
+
+mysql모듈수정
+
+SSH> npm i -g pm2 // 설치
+SSH> npm run deploy
+
+잘 안되면, 디버깅, 
+node 로 직접실행해서 에러문 찾아라.
+
+npm i bcrypt 실행
