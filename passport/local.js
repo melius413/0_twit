@@ -17,6 +17,8 @@ async function cb(email, userpw, done) {
     } else done(null, false, '이메일/패스워드가 일치하지 않습니다.'); // 에러없이 로긴 실패
 }
 
+// http://www.passportjs.org/packages/passport-local/
+// field명 변경시, field명 기입필요
 const localStrategy = (passport) => {
     passport.use(new LocalStrategy({
         usernameField: 'email', // req,body.email을 이용해서 알아서 로긴해줌.

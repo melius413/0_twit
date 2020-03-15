@@ -64,6 +64,8 @@ router.post('/login', isLogout, async (req, res, next) => {
 
 router.get('/logout', isLogin, (req, res, next) => { // url과 콜백사이에 미들웨어 계속 넣을수있음
   req.logout(); // 패스포트 메소드
+  console.log(req.user); // 로그인 정보확인
+  req.session.destroy(); // 세션삭제 (세션을 지워야지 로그아웃됨??)
   req.app.locals.user = null; // 전역변수(locals) 사용시 초기화
   // res.redirect('/');
   res.redirect(alertLoc('로그아웃 되었습니다.', '/'));
@@ -77,5 +79,13 @@ router.post('/idchk', isLogout, async (req, res, next) => {
   if (result[0][0]) res.json({ result: false });
   else res.json({ result: true });
 });
+
+router.get('/kakao', passport.authenticate('kakao')); // 카카오 창 떠짐, kakao.js에 의해서 (요청)
+
+router.get('/kakao/cb', passport.authenticate('kakao', {
+  failureRedirect: '/'  // 실패시
+}), (req, res) => {  // 성공시    
+  res.redirect("/");
+}); // 요청에 따른 응답
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const local = require('./local');
+const kakao = require('./kakao');
 const { connect } = require('../modules/mysql');
 
 module.exports = (passport) => {
@@ -22,5 +23,5 @@ module.exports = (passport) => {
     });
 
     local(passport);
-    // kakao(passport);
+    kakao(passport);
 }
